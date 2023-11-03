@@ -68,10 +68,10 @@ class HamsterFactory {
 
     private void executeRemoveByName(String name) {
         try
-        { //Hamster homyak = fabrika.get(name);
-            System.out.println("Хомяк '"+name+"' удалён успешно");
+        {   
+            //Hamster homyak = fabrika(name);
             fabrika.remove(name);
-        
+            System.out.println("Хомяк '"+name+"' удалён успешно");
         }
         catch (Exception e){
             System.out.println("Хомяка c именем '"+name+"' не существует");
@@ -82,13 +82,14 @@ class HamsterFactory {
 
     private void executeClear() 
     {
-        Iterator udalyator = fabrika.iterator();
+        Iterator<Hamster> udalyator = fabrika.iterator();
         while (udalyator.hasNext())
             
         {
             Hamster homyak = udalyator.next();
             System.out.println("Хомяк '"+homyak.name+"' удалён успешно");
             udalyator.remove();
+           
         }
         System.out.println("Операция очистки завершена успешно! Все хомяки были удалены из хранилища");
     }
@@ -101,7 +102,7 @@ class HamsterFactory {
     {
         if (fabrika.isEmpty()==false)
         {
-            System.out.println("Количество хомяков в хранилище равно"+fabrika.size());
+            System.out.println("Количество хомяков в хранилище равно "+fabrika.size());
         }
         else
         {
