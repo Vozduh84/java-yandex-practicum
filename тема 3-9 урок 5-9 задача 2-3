@@ -1,0 +1,111 @@
+class Bank  {
+     private int calculateCreditLimit(String currency) {    
+        switch (currency) {
+            case "RUB":   
+                return 100000;
+            case "USD": 
+                return 1250;
+            case "EUR": 
+                return 1000;
+            default:
+                return 0;
+        }
+    }
+
+  public BankAccount createNewAccount (String accountType, String currency) { // создать метод createNewAccount, который принимает на вход строку с типом аккаунта и строку с создаваемой валютой
+        switch (accountType) {
+            case "debit_account": // если тип "debit_account"
+            System.out.println("Ваш дебетовый счет создан"); // вывести сообщение "Ваш дебетовый счет создан"
+                class DebitAccount extends BankAccount {};
+            BankAccount debitAccount = new DebitAccount(0, currency);
+            return debitAccount;// создать дебетовый аккаунт в выбранной валюте и с нулевым балансом
+            
+            case "credit_account": // если тип "credit_account"
+            int creditLimit = calculateCreditLimit(currency); // посчитать кредитный лимит в зависимости от валюты
+       System.out.println("Кредитный счет создан. Ваш лимит по счету " + creditLimit + " " + currency); // вывести сообщение "Кредитный счет создан. Ваш лимит по счету {limit} {currency}"
+                class CreditAccount extends BankAccount {};
+            BankAccount сreditAccount = new CreditAccount(0, currency, creditLimit);
+            return сreditAccount;// создать кредитный аккаунт в выборанной валюты и с посчитанным кредитным лимитом
+            default: // иначе
+            System.out.println ("Неверно указан тип создаваемого счета");
+      // вывести сообщение "Неверно указа тип создаваемого счета"
+            BankAccount bankAccount = new BankAccount ();
+            return bankAccount;// создать пустой объект BankAccount()
+                 }
+  }  
+           
+     public void closeAccount(BankAccount bankAccount) { // создать метод closeAccount, который принимает на вход переменную типа BankAccount
+     if (bankAccount instanceof DebitAccount) { // если переданный аккаунт дебетовый
+        if (amount == 0) {  // если на счету нет денег вывести сообщение "Ваш дебетовый счет закрыт"
+          System.out.println("Ваш дебетовый счет закрыт");
+            }
+     } else {// иначе вывести сообщение "Ваш дебетовый счет закрыт. Вы можете получить остаток по вашему счету в размере {amount} {currency} в отделении банка"
+                System.out.println("Ваш дебетовый счет закрыт. Вы можете получить остаток по вашему счету в размере " + amount + " " + currency + " в отделении банка");
+            }
+        if(bankAccount instanceof CreditAccount) {// если переданный аккаунт кредитный
+            if (amount == 0) { // если на счету нет денег вывести сообщение "Ваш кредитный счет закрыт"
+                System.out.println("Ваш кредитный счет закрыт");
+            }
+            if (amount > 0){ // если на счету положительный баланс вывести сообщение "Ваш кредитный счет закрыт. Вы можете получить остаток по вашему счету в размере {amount} {currency} в отделении банка"
+            System.out.println("Ваш кредитный счет закрыт. Вы можете получить остаток по вашему счету в размере " + amount + " " + currency + " в отделении банка");
+            }
+            if (amount < 0){ // если на счету отрицательный баланс вывести сообщение "Вы не можете закрыть кредитный счет потому как на нем еще есть задолженность. Ваша задолженность по счету составляет {amount} {currency}"
+                System.out.println("Вы не можете закрыть кредитный счет потому как на нем еще есть задолженность. Задолженность по счету составляет " + amount + " " + currency);
+            }
+        }
+         else  {System.out.println("Пока что мы не можем закрыть данный вид счета");  // иначе вывести сообщение "Пока что мы не можем закрыть данный вид счета"
+               }       
+        }
+}     
+      
+
+
+
+
+
+
+
+
+public BankAccount createNewAccount( String accountType, String Currency)
+      {
+          switch (accountType)
+          {
+              case "debit_account":
+                  System.out.println("Ваше дебетовый счет создан");
+                  BankAccount debitAccount = new DebitAccount (0, currency);
+                  return debitAccount;
+              case "credit_account":
+                  int creditLimit = calculateCreditLimit(currency);
+                  System.ount.println("Кредитный счет создан. Ваш лимит по счету " + creditLimit + " " + currency);
+                  BankAccount creditAccount = new CreditAccount(0, currency, creditLimit);
+                  return creditAccount;
+              default:
+                  System.out.println("Неверно указан тип создаваемого счета");
+          }
+      }
+      
+      public void closeAccount(BankAccount bankAccount)
+      {
+              if (bankAccount instanceof DebitAccount)
+              {
+                  if (amount == 0)
+                  {
+                      System.out.println("Ваш дебетовый счет закрыт");
+                  }
+                  else
+                  {
+                      System.out.println("Ваш дебетовый счет закрыт. Вы можете получить остаток по вашему счету в размере " + amount + " " + currency + " в отделении банка");
+                  }
+                  if (amount > 0)
+                  {
+                      System.out.println("Ваш кредитный счет закрыт. Вы можете получить остаток по вашему счету в размере " + amount + " " + currency + " в отделении банка");
+                  }
+                  if (amount < 0)
+                  {
+                      System.out.println("Вы не можете закрыть кредитный счет, потому что на нем есть задолженность. Задолженность по счету составляет " + amount + " " + currency );
+                  }
+              }
+          else System.out.println("Пока что мы не можем закрыть данный вид счета");
+      }
+
+      
