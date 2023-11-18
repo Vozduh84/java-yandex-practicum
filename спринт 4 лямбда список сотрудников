@@ -1,0 +1,96 @@
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Organisation organisation = new Organisation();
+
+        System.out.println("Список всех сотрудников:");
+        
+        // замените создание анонимного класса на лямбда-функцию
+        EmployeeFilter employeeFilter = (Employee e) -> {
+            return true;
+            };
+        organisation.printEmployees(employeeFilter);
+
+        EmployeeFilter employeeFilter1 = (Employee e) -> {
+            if (e.age > 30) {
+                return true;
+            } else {
+                return false;
+            }
+            };
+        
+         EmployeeFilter employeeFilter2 = (Employee e) -> {
+            if (e.salary >= 50) {
+                return true;
+            } else {
+                return false;
+            }
+            };
+        
+        EmployeeFilter employeeFilter3 = (Employee e) -> {
+            if (e.name.startsWith("А")) {
+                return true;
+            } else {
+                return false;
+            }
+            };
+
+        System.out.println("Список сотрудников старше 30:");
+        organisation.printEmployees(employeeFilter1);// ваш код здесь
+
+        System.out.println("Список сотрудников с зарплатой 50 и выше:");
+        organisation.printEmployees(employeeFilter2);// ваш код здесь
+
+        System.out.println("Список сотрудников с именем начинающимся на \"А\":");
+        organisation.printEmployees(employeeFilter3);// ваш код здесь
+    }
+}
+
+@FunctionalInterface
+
+interface EmployeeFilter {
+    boolean accept(Employee e);
+}
+
+class Employee {
+    String name;
+    int age;
+    int salary;
+
+    Employee(String name, int age, int salary) {
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return name + ", возраст " + age + ", зарплата " + salary;
+    }
+}
+
+class Organisation {
+    private ArrayList<Employee> employeeList;
+
+    Organisation() {
+        employeeList = new ArrayList<>();
+        employeeList.add( new Employee("Алина", 20, 33));
+        employeeList.add( new Employee("Иван", 41, 58));
+        employeeList.add( new Employee("Ольга", 30, 41));
+        employeeList.add( new Employee("Дмитрий", 23, 38));
+        employeeList.add( new Employee("Анастасия", 38, 50));
+        employeeList.add( new Employee("Максим", 31, 30));
+        employeeList.add( new Employee("Антон", 23, 33));
+    }
+
+    void printEmployees(EmployeeFilter employeeFilter) {
+        for (Employee e: employeeList) {
+            if (employeeFilter.accept(e)) {
+                System.out.println(e);
+            }
+        }
+        System.out.println(); // печатаем пустую строку для улучшения читаемости
+    }
+}
